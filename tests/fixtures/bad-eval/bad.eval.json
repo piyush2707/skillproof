@@ -1,0 +1,10 @@
+{
+  "skill": "Bad Name",
+  "evidence_type": "guess",
+  "agent": "none",
+  "tested_on": "yesterday",
+  "cases": [
+    { "id": "one", "prompt": "x", "without_skill": "maybe", "with_skill": "pass" },
+    { "id": "one", "prompt": "y", "expect": "z", "without_skill": "pass", "with_skill": "pass" }
+  ]
+}
