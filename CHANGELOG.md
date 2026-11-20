@@ -7,3 +7,5 @@
 - Added Eval Cards: format reference, validate_evals.py, example card, viewer page and updated workflow.
 - Added Skill Pages: build_pages.py, build workflow, and a second example skill.
 - Added CONTRIBUTING, SECURITY and CODE_OF_CONDUCT, issue templates and a pull request template.
+- Added hand-made Skill Pages (index plus hello-skill and code-reviewer).
+- Rewrote README for the first release.
