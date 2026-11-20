@@ -1,0 +1,8 @@
+{
+  "name_pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+  "max_name_length": 64,
+  "min_description_length": 40,
+  "max_description_length": 1024,
+  "max_body_lines": 500,
+  "trigger_phrases": ["use when", "use this", "when the user", "trigger"]
+}
