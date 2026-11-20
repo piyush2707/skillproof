@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SkillProof Eval Cards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&family=Playfair+Display:ital,wght@0,600;1,500;1,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black:#14100d; --ink:#1d1712; --brown:#5a3a24; --brown2:#7a4f31;
+    --caramel:#d99a55; --cream:#f4ead8; --cream2:#e8d9bb; --muted:#b9a88c;
+    --good:#2f7d4f; --mid:#b8801f; --bad:#b3402e;
+    --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --serif:'Playfair Display',Georgia,'Times New Roman',serif;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--black); color:var(--cream); font-family:var(--sans); line-height:1.6; overflow-x:hidden; }
+  a { color:inherit; }
+  .wrap { max-width:760px; margin:0 auto; padding:0 18px 60px; position:relative; }
+  .wrap::before {
+    content:""; position:absolute; z-index:-1; right:-90px; top:-20px; width:300px; height:300px; border-radius:50%;
+    background:radial-gradient(circle, rgba(217,154,85,.3), rgba(90,58,36,.12) 55%, transparent 70%);
+    filter:blur(10px); animation:float 9s ease-in-out infinite;
+  }
+  nav { display:flex; justify-content:space-between; align-items:center; padding:18px 0; }
+  .logo { font-weight:900; letter-spacing:-.5px; font-size:1.1rem; text-decoration:none; }
+  .logo i { font-family:var(--serif); font-weight:700; color:var(--caramel); }
+  nav a.back { font-size:.85rem; font-weight:700; border:1.5px solid var(--brown2); padding:8px 14px;
+               border-radius:999px; text-decoration:none; transition:background .2s, color .2s; }
+  nav a.back:hover { background:var(--caramel); color:var(--black); }
+  h1 { font-size:clamp(2rem,8vw,3rem); line-height:1.05; margin:10px 0 10px; font-weight:900; letter-spacing:-.03em; }
+  h1 em { font-family:var(--serif); font-style:italic; font-weight:700; letter-spacing:-.01em;
+          background:linear-gradient(90deg,var(--caramel),#f6d9a8,var(--caramel)); background-size:200% 100%;
+          -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent;
+          animation:shimmer 4s linear infinite; }
+  p.sub { color:var(--cream2); margin:0 0 18px; }
+  textarea { width:100%; min-height:230px; background:var(--ink); color:var(--cream);
+             border:1.5px solid var(--brown); border-radius:14px; padding:14px;
+             font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; transition:border-color .2s, box-shadow .2s; }
+  textarea:focus { outline:none; border-color:var(--caramel); box-shadow:0 0 0 3px rgba(217,154,85,.2); }
+  textarea::placeholder { color:var(--muted); }
+  .row { display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; }
+  button { background:transparent; color:var(--cream); border:1.5px solid var(--brown2);
+           border-radius:10px; padding:11px 16px; font-size:14px; font-weight:700; font-family:var(--sans);
+           transition:transform .2s; }
+  button:hover { transform:translateY(-2px); }
+  button:active { transform:scale(.97); }
+  button.primary { background:var(--caramel); color:var(--black); border:none; font-weight:900;
+                   box-shadow:0 8px 22px rgba(217,154,85,.25); }
+  .card { background:var(--cream); color:var(--black); border-radius:16px; padding:18px; margin:14px 0;
+          animation:fadeUp .6s cubic-bezier(.2,.7,.2,1) both; }
+  .card h2 { margin:0 0 4px; font-size:1.4rem; font-weight:900; letter-spacing:-.02em; }
+  .card h2 em { font-family:var(--serif); font-style:italic; font-weight:700; color:var(--brown2); }
+  .meta { color:var(--brown2); font-size:.85rem; }
+  .badge { display:inline-block; font-size:.7rem; font-weight:900; letter-spacing:.1em; text-transform:uppercase;
+           padding:4px 10px; border-radius:999px; margin-bottom:8px; }
+  .badge.example { background:transparent; border:1.5px dashed var(--brown2); color:var(--brown2); }
+  .badge.manual, .badge.automated { background:var(--black); color:var(--caramel); }
+  .scores { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px; }
+  .score { background:var(--black); color:var(--cream); border-radius:12px; padding:12px; text-align:center; }
+  .score b { display:block; font-size:1.8rem; font-weight:900; letter-spacing:-.02em; color:var(--caramel); }
+  .score span { font-family:var(--serif); font-style:italic; font-size:.95rem; }
+  .case { border-top:1px solid rgba(20,16,13,.12); padding:12px 0; }
+  .case:first-of-type { border-top:none; }
+  .case .id { font-weight:900; }
+  .case .q { font-size:.9rem; margin:2px 0; }
+  .case .e { font-size:.85rem; color:var(--brown2); }
+  .pill { display:inline-block; font-size:.75rem; font-weight:900; padding:3px 10px; border-radius:999px;
+          margin:6px 6px 0 0; color:#fff; }
+  .pill.pass { background:var(--good); } .pill.partial { background:var(--mid); }
+  .pill.fail { background:var(--bad); } .pill.untested { background:#8a8378; }
+  .note { font-size:.8rem; font-style:italic; margin-top:4px; }
+  .err { background:var(--cream); color:var(--bad); border-radius:16px; padding:16px; margin:14px 0; font-weight:700; }
+  .foot { font-size:.85rem; color:var(--muted); margin-top:24px; }
+  @keyframes float { 0%,100% { transform:translate(0,0) scale(1); } 50% { transform:translate(-28px,22px) scale(1.1); } }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }
+  @keyframes shimmer { to { background-position:-200% 0; } }
+  nav, h1, p.sub { animation:fadeUp .7s cubic-bezier(.2,.7,.2,1) both; }
+  h1 { animation-delay:.1s; } p.sub { animation-delay:.2s; }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation:none !important; transition:none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="logo" href="../">Skill<i>Proof</i></a>
+    <a class="back" href="../">← Home</a>
+  </nav>
+
+  <h1>Eval <em>Cards</em></h1>
+  <p class="sub">Paste an Eval Card (.eval.json) to see how a skill did with and without it. Runs in your browser; nothing is uploaded.</p>
+
+  <textarea id="input" placeholder='Paste the contents of a .eval.json file here.'></textarea>
+
+  <div class="row">
+    <button class="primary" id="run">Show card</button>
+    <button id="sample">Load sample</button>
+    <button id="clear">Clear</button>
+  </div>
+
+  <div id="out"></div>
+
+  <p class="foot">Eval Cards record evidence; they do not run any agent. Check the badge: "example" means
+  sample data, "manual" means a person ran the cases and recorded the results. Scores count pass as 1,
+  partial as 0.5, fail as 0, and ignore untested cases. Format reference: <b>schema/eval-card.md</b> in the repo.</p>
+</div>
+
+<script>
+(function () {
+  var SAMPLE = {
+    skill: "hello-skill", version: "0.1.0", evidence_type: "example",
+    agent: "Example data, not a real test run", tested_on: "2026-11-20",
+    cases: [
+      { id: "what-is-a-skill", prompt: "What is an agent skill?",
+        expect: "Says a skill is a folder with a SKILL.md file that teaches an agent one task",
+        without_skill: "partial", with_skill: "pass", notes: "Example only" },
+      { id: "show-structure", prompt: "Show me the structure of a skill.",
+        expect: "Describes the folder, SKILL.md, and the name and description fields",
+        without_skill: "partial", with_skill: "pass" },
+      { id: "unrelated-question", prompt: "What is the capital of France?",
+        expect: "Answers normally and does not trigger the skill",
+        without_skill: "pass", with_skill: "pass", notes: "Guard case: the skill must stay quiet" }
+    ]
+  };
+  var POINTS = { pass: 1, partial: 0.5, fail: 0 };
+  var input = document.getElementById("input");
+  var out = document.getElementById("out");
+
+  function el(tag, text, cls) {
+    var e = document.createElement(tag);
+    if (text !== undefined) e.textContent = text;
+    if (cls) e.className = cls;
+    return e;
+  }
+
+  function fail(msg) { out.appendChild(el("div", msg, "err")); }
+
+  function tally(cases, key) {
+    var got = 0, n = 0;
+    cases.forEach(function (c) {
+      if (POINTS.hasOwnProperty(c[key])) { got += POINTS[c[key]]; n++; }
+    });
+    return { got: got, n: n };
+  }
+
+  function fmt(t) { return t.n ? (t.got % 1 === 0 ? t.got : t.got.toFixed(1)) + " / " + t.n : "n/a"; }
+
+  function run() {
+    out.textContent = "";
+    var text = input.value.trim();
+    if (!text) { fail("Paste an Eval Card first."); return; }
+    var card;
+    try { card = JSON.parse(text); } catch (e) { fail("That is not valid JSON: " + e.message); return; }
+    if (!card || typeof card !== "object" || !Array.isArray(card.cases) || !card.cases.length) {
+      fail("This does not look like an Eval Card (it needs a non-empty cases list).");
+      return;
+    }
+
+    var c = el("div", undefined, "card");
+    var type = String(card.evidence_type || "unknown");
+    c.appendChild(el("span", type === "example" ? "Example data" : type + " evidence", "badge " +
+      (type === "example" ? "example" : "manual")));
+    var h = el("h2");
+    h.appendChild(document.createTextNode(String(card.skill || "unnamed skill") + " "));
+    h.appendChild(el("em", "v" + String(card.version || "?")));
+    c.appendChild(h);
+    c.appendChild(el("div", "Agent: " + String(card.agent || "not stated") + "  ·  Tested: " +
+      String(card.tested_on || "not stated"), "meta"));
+
+    var scores = el("div", undefined, "scores");
+    var w = el("div", undefined, "score");
+    w.appendChild(el("b", fmt(tally(card.cases, "without_skill"))));
+    w.appendChild(el("span", "without the skill"));
+    var s = el("div", undefined, "score");
+    s.appendChild(el("b", fmt(tally(card.cases, "with_skill"))));
+    s.appendChild(el("span", "with the skill"));
+    scores.appendChild(w); scores.appendChild(s);
+    c.appendChild(scores);
+    out.appendChild(c);
+
+    var list = el("div", undefined, "card");
+    card.cases.forEach(function (cs) {
+      var d = el("div", undefined, "case");
+      d.appendChild(el("div", String(cs.id || "case"), "id"));
+      d.appendChild(el("div", "Prompt: " + String(cs.prompt || ""), "q"));
+      d.appendChild(el("div", "Expect: " + String(cs.expect || ""), "e"));
+      var wo = String(cs.without_skill || "untested"), wi = String(cs.with_skill || "untested");
+      d.appendChild(el("span", "without: " + wo, "pill " + wo));
+      d.appendChild(el("span", "with: " + wi, "pill " + wi));
+      if (cs.notes) d.appendChild(el("div", String(cs.notes), "note"));
+      list.appendChild(d);
+    });
+    out.appendChild(list);
+  }
+
+  document.getElementById("run").onclick = run;
+  document.getElementById("sample").onclick = function () {
+    input.value = JSON.stringify(SAMPLE, null, 2); run();
+  };
+  document.getElementById("clear").onclick = function () { input.value = ""; out.textContent = ""; };
+})();
+</script>
+</body>
+</html>
