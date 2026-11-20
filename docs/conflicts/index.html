@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SkillProof Conflict Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&family=Playfair+Display:ital,wght@0,600;1,500;1,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black:#14100d; --ink:#1d1712; --brown:#5a3a24; --brown2:#7a4f31;
+    --caramel:#d99a55; --cream:#f4ead8; --cream2:#e8d9bb; --muted:#b9a88c;
+    --good:#2f7d4f; --mid:#b8801f; --bad:#b3402e;
+    --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --serif:'Playfair Display',Georgia,'Times New Roman',serif;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--black); color:var(--cream); font-family:var(--sans); line-height:1.6; overflow-x:hidden; }
+  a { color:inherit; }
+  .wrap { max-width:760px; margin:0 auto; padding:0 18px 60px; position:relative; }
+  .wrap::before {
+    content:""; position:absolute; z-index:-1; right:-90px; top:-20px; width:300px; height:300px; border-radius:50%;
+    background:radial-gradient(circle, rgba(217,154,85,.3), rgba(90,58,36,.12) 55%, transparent 70%);
+    filter:blur(10px); animation:float 9s ease-in-out infinite;
+  }
+  nav { display:flex; justify-content:space-between; align-items:center; padding:18px 0; }
+  .logo { font-weight:900; letter-spacing:-.5px; font-size:1.1rem; text-decoration:none; }
+  .logo i { font-family:var(--serif); font-weight:700; color:var(--caramel); }
+  nav a.back { font-size:.85rem; font-weight:700; border:1.5px solid var(--brown2); padding:8px 14px;
+               border-radius:999px; text-decoration:none; transition:background .2s, color .2s; }
+  nav a.back:hover { background:var(--caramel); color:var(--black); }
+
+  h1 { font-size:clamp(2rem,8vw,3rem); line-height:1.05; margin:10px 0 10px; font-weight:900; letter-spacing:-.03em; }
+  h1 em { font-family:var(--serif); font-style:italic; font-weight:700; letter-spacing:-.01em;
+          background:linear-gradient(90deg,var(--caramel),#f6d9a8,var(--caramel)); background-size:200% 100%;
+          -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent;
+          animation:shimmer 4s linear infinite; }
+  p.sub { color:var(--cream2); margin:0 0 18px; }
+
+  textarea { width:100%; min-height:230px; background:var(--ink); color:var(--cream);
+             border:1.5px solid var(--brown); border-radius:14px; padding:14px;
+             font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; transition:border-color .2s, box-shadow .2s; }
+  textarea:focus { outline:none; border-color:var(--caramel); box-shadow:0 0 0 3px rgba(217,154,85,.2); }
+  textarea::placeholder { color:var(--muted); }
+
+  .row { display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; align-items:center; }
+  button { background:transparent; color:var(--cream); border:1.5px solid var(--brown2);
+           border-radius:10px; padding:11px 16px; font-size:14px; font-weight:700; font-family:var(--sans);
+           transition:transform .2s, background .2s; }
+  button:hover { transform:translateY(-2px); }
+  button:active { transform:scale(.97); }
+  button.primary { background:var(--caramel); color:var(--black); border:none; font-weight:900;
+                   box-shadow:0 8px 22px rgba(217,154,85,.25); }
+  label { font-size:14px; color:var(--cream2); }
+  label b { color:var(--caramel); }
+  input[type=range] { width:150px; accent-color:var(--caramel); }
+
+  .card { background:var(--cream); color:var(--black); border-radius:16px; padding:16px; margin:12px 0;
+          animation:fadeUp .6s cubic-bezier(.2,.7,.2,1) both; }
+  .pair { font-weight:900; letter-spacing:-.01em; }
+  .pair em { font-family:var(--serif); font-style:italic; font-weight:700; color:var(--brown2); padding:0 4px; }
+  .score { float:right; font-weight:900; font-size:1.4rem; letter-spacing:-.02em; }
+  .high { color:var(--bad); } .mid { color:var(--mid); } .low { color:var(--good); }
+  .muted { color:var(--muted); font-size:.85rem; }
+  .chip { display:inline-block; background:var(--black); color:var(--caramel); border-radius:999px;
+          padding:3px 11px; margin:8px 6px 0 0; font-size:12px; font-weight:700; }
+  .empty { background:var(--cream); color:var(--good); border-radius:16px; padding:16px; margin:12px 0; font-weight:700; }
+  .foot { font-size:.85rem; color:var(--muted); margin-top:24px; }
+
+  @keyframes float { 0%,100% { transform:translate(0,0) scale(1); } 50% { transform:translate(-28px,22px) scale(1.1); } }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }
+  @keyframes shimmer { to { background-position:-200% 0; } }
+  nav, h1, p.sub { animation:fadeUp .7s cubic-bezier(.2,.7,.2,1) both; }
+  h1 { animation-delay:.1s; } p.sub { animation-delay:.2s; }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation:none !important; transition:none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="logo" href="../">Skill<i>Proof</i></a>
+    <a class="back" href="../">← Home</a>
+  </nav>
+
+  <h1>Conflict <em>Map</em></h1>
+  <p class="sub">Find skills whose descriptions overlap and may confuse an agent. Runs in your browser; nothing is uploaded.</p>
+
+  <textarea id="input" placeholder="Paste two or more SKILL.md files here.
+Separate skills with a line of =====
+"></textarea>
+
+  <div class="row">
+    <button class="primary" id="run">Check overlap</button>
+    <button id="sample">Load sample</button>
+    <button id="clear">Clear</button>
+  </div>
+  <div class="row">
+    <label for="th">Show pairs above <b><span id="thv">20</span>%</b></label>
+    <input type="range" id="th" min="5" max="80" value="20">
+  </div>
+
+  <div id="out"></div>
+
+  <p class="foot">How it works: it compares the words in each skill's name and description
+  (ignoring common words) and scores the overlap from 0 to 100%. High overlap means an agent may
+  have trouble choosing between the skills. It does not run any agent, so treat it as a warning
+  to review, not proof of a clash.</p>
+</div>
+
+<script>
+(function () {
+  var STOP = "a an the and or of to in on for with is are be this that it as at by from when use used using user users asks ask wants want skill skills agent can will any all your you their its if then than into about also".split(" ");
+  var stop = {};
+  STOP.forEach(function (w) { stop[w] = true; });
+
+  var SAMPLE =
+"---\nname: code-reviewer\ndescription: Reviews code for bugs and style problems. Use when the user asks for a code review of a pull request.\n---\n\nBody.\n\n=====\n\n---\nname: pr-reviewer\ndescription: Reviews pull requests for bugs and code quality. Use when the user wants a pull request reviewed.\n---\n\nBody.\n\n=====\n\n---\nname: recipe-helper\ndescription: Suggests recipes from ingredients. Use when the user asks what to cook.\n---\n\nBody.\n";
+
+  var input = document.getElementById("input");
+  var out = document.getElementById("out");
+  var th = document.getElementById("th");
+  var thv = document.getElementById("thv");
+
+  function parse(block) {
+    var m = block.match(/^\s*---\s*\n([\s\S]*?)\n---/);
+    if (!m) return null;
+    var fm = m[1];
+    var name = ((fm.match(/^name:\s*(.+)$/m) || [])[1] || "").trim().replace(/^["']|["']$/g, "");
+    var desc = ((fm.match(/^description:\s*(.*)$/m) || [])[1] || "");
+    if (/^[>|][-+]?$/.test(desc.trim())) {
+      var after = fm.split(/^description:.*$/m)[1] || "";
+      var lines = [];
+      after.split("\n").forEach(function (l) { if (/^\s+\S/.test(l)) lines.push(l.trim()); });
+      desc = lines.join(" ");
+    }
+    desc = desc.trim().replace(/^["']|["']$/g, "");
+    if (!name) return null;
+    return { name: name, desc: desc };
+  }
+
+  function stem(w) {
+    if (w.length > 5 && w.slice(-3) === "ing") return w.slice(0, -3);
+    if (w.length > 4 && w.slice(-2) === "ed") return w.slice(0, -2);
+    if (w.length > 4 && w.slice(-1) === "s" && w.slice(-2) !== "ss") return w.slice(0, -1);
+    return w;
+  }
+
+  function words(text) {
+    var set = {};
+    (text.toLowerCase().match(/[a-z0-9]+/g) || []).forEach(function (w) {
+      if (w.length < 3 || stop[w]) return;
+      set[stem(w)] = true;
+    });
+    return set;
+  }
+
+  function el(tag, text, cls) {
+    var e = document.createElement(tag);
+    if (text !== undefined) e.textContent = text;
+    if (cls) e.className = cls;
+    return e;
+  }
+
+  function run() {
+    out.textContent = "";
+    var text = input.value.trim();
+    var blocks = text.split(/^\s*={5,}\s*$/m).map(function (b) { return b.trim(); })
+                     .filter(function (b) { return b.length; });
+    var skills = [];
+    blocks.forEach(function (b) {
+      var p = parse(b);
+      if (p) { p.words = words(p.name.replace(/-/g, " ") + " " + p.desc); skills.push(p); }
+    });
+    if (skills.length < 2) {
+      out.appendChild(el("p", "Paste at least two skills (each with a name) separated by =====", "muted"));
+      return;
+    }
+    var limit = parseInt(th.value, 10);
+    var pairs = [];
+    for (var i = 0; i < skills.length; i++) {
+      for (var j = i + 1; j < skills.length; j++) {
+        var a = skills[i].words, b = skills[j].words, shared = [], union = {};
+        Object.keys(a).forEach(function (k) { union[k] = true; if (b[k]) shared.push(k); });
+        Object.keys(b).forEach(function (k) { union[k] = true; });
+        var total = Object.keys(union).length;
+        var score = total ? Math.round((shared.length / total) * 100) : 0;
+        pairs.push({ a: skills[i].name, b: skills[j].name, score: score, shared: shared });
+      }
+    }
+    pairs.sort(function (x, y) { return y.score - x.score; });
+    var shown = pairs.filter(function (p) { return p.score >= limit; });
+
+    out.appendChild(el("p", skills.length + " skills, " + pairs.length + " pairs checked, " +
+      shown.length + " above " + limit + "%.", "muted"));
+
+    if (!shown.length) {
+      out.appendChild(el("div", "No pairs above the threshold. Lower the slider to see more.", "empty"));
+      return;
+    }
+    shown.forEach(function (p) {
+      var cls = p.score >= 50 ? "high" : (p.score >= 30 ? "mid" : "low");
+      var card = el("div", undefined, "card");
+      card.appendChild(el("span", p.score + "%", "score " + cls));
+      var pair = el("div", undefined, "pair");
+      pair.appendChild(document.createTextNode(p.a));
+      pair.appendChild(el("em", "vs"));
+      pair.appendChild(document.createTextNode(p.b));
+      card.appendChild(pair);
+      var chips = el("div");
+      p.shared.forEach(function (w) { chips.appendChild(el("span", w, "chip")); });
+      if (!p.shared.length) chips.appendChild(el("span", "no shared words", "chip"));
+      card.appendChild(chips);
+      out.appendChild(card);
+    });
+  }
+
+  th.oninput = function () { thv.textContent = th.value; if (input.value.trim()) run(); };
+  document.getElementById("run").onclick = run;
+  document.getElementById("sample").onclick = function () { input.value = SAMPLE; run(); };
+  document.getElementById("clear").onclick = function () { input.value = ""; out.textContent = ""; };
+})();
+</script>
+</body>
+</html>
