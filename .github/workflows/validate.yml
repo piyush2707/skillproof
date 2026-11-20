@@ -1,0 +1,28 @@
+name: Validate skills
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate example skills
+        run: python validators/validate_skill.py skills-examples
+
+      - name: Bad fixture must be rejected
+        run: |
+          if python validators/validate_skill.py tests/fixtures; then
+            echo "Expected the bad skill to fail, but it passed"
+            exit 1
+          fi
+          echo "Bad skill correctly rejected"
