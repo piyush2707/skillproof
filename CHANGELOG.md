@@ -1,11 +1,7 @@
 # Changelog
 
-## Unreleased
-- Initial repository: MIT license, README, roadmap.
-- Added validator rules, validate_skill.py and the first GitHub Actions workflow.
-- Added Context Meter page and docs/ website (GitHub Pages).
-- Added Eval Cards: format reference, validate_evals.py, example card, viewer page and updated workflow.
-- Added Skill Pages: build_pages.py, build workflow, and a second example skill.
-- Added CONTRIBUTING, SECURITY and CODE_OF_CONDUCT, issue templates and a pull request template.
-- Added hand-made Skill Pages (index plus hello-skill and code-reviewer).
-- Rewrote README for the first release.
+## v0.1.0
+- Context Meter, Conflict Map, Eval Cards and Skill Pages.
+- Validator Action for SKILL.md files and eval cards, with fixtures that must be rejected.
+- Community files: CONTRIBUTING, SECURITY, CODE_OF_CONDUCT, issue and pull request templates.
+- Website in a black, brown and cream theme, published with GitHub Pages.
