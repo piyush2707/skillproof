@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/assets/banner.svg" alt="SkillProof: agent skills are easy to write, hard to trust" width="100%">
+<img src="assets/skill-logo.jpg" alt="SkillProof: agent skills are easy to write, hard to trust" width="100%">
 
 <br>
 
