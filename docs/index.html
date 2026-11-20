@@ -161,7 +161,7 @@
     <span class="eyebrow">Open source · Free · In your browser</span>
     <h1>Agent skills are easy to write. <em>Hard to trust.</em> Let's <u>prove</u> them.</h1>
     <p class="lead">SkillProof checks whether a skill is <b>well-formed</b>, measures <b>how much context it costs</b>,
-       and flags <b>skills that may clash</b>. No install, no account, nothing uploaded.</p>
+       flags <b>skills that may clash</b>, and records <b>evidence that a skill works</b>. No install, no account, nothing uploaded.</p>
     <div class="cta">
       <a class="btn main" href="meter/">Try the Context Meter</a>
       <a class="btn alt" href="conflicts/">Open Conflict Map</a>
@@ -186,17 +186,18 @@
         <p>Finds skills whose descriptions overlap, so an agent may pick the wrong one.</p>
         <span class="go">Open →</span>
       </a>
+      <a class="card" href="evals/">
+        <span class="tag live">Live</span>
+        <h3>Eval <em>Cards</em></h3>
+        <p>Test cases with before/after evidence that a skill actually works.</p>
+        <span class="go">Open →</span>
+      </a>
       <a class="card" href="https://github.com/piyush2707/skillproof/tree/main/validators">
         <span class="tag live">Live</span>
         <h3>Validator <em>Action</em></h3>
-        <p>A GitHub Action that checks SKILL.md structure and quality on every push and pull request.</p>
+        <p>A GitHub Action that checks SKILL.md files and eval cards on every push and pull request.</p>
         <span class="go">View code →</span>
       </a>
-      <div class="card">
-        <span class="tag soon">Planned</span>
-        <h3>Eval <em>Cards</em></h3>
-        <p>Test cases with before/after evidence that a skill actually works.</p>
-      </div>
       <div class="card">
         <span class="tag soon">Planned</span>
         <h3>Skill <em>Pages</em></h3>
@@ -221,22 +222,23 @@
 <section class="dark" id="validator">
   <div class="wrap">
     <h2>What the validator <em>checks</em></h2>
-    <p class="sec-sub">Built into this repo's GitHub Actions. Every rule is in <b>validators/rules.json</b>.</p>
+    <p class="sec-sub">Built into this repo's GitHub Actions. Skill rules are in <b>validators/rules.json</b>.</p>
     <ul class="checks">
       <li><b>Frontmatter</b> exists, with a name and description</li>
       <li><b>Name</b> uses lowercase letters, numbers and hyphens</li>
       <li><b>Description</b> is long enough to be useful and says when to use the skill</li>
       <li><b>File links</b> inside the skill actually exist</li>
       <li><b>Length</b> warnings for very long skill bodies</li>
+      <li><b>Eval cards</b> have the required fields, valid results and unique case ids</li>
     </ul>
     <p class="note">Token counts are estimates (about 4 characters per token). Overlap scores are a word-based warning,
-       not proof of a clash. SkillProof does not run any agent.</p>
+       not proof of a clash. Eval cards record evidence; SkillProof does not run any agent.</p>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <p>Made by <b>Piyush</b> .</p>
+    <p>Made by <b>Piyush</b> at <b>Welvox</b>.</p>
     <p>MIT licensed · <a href="https://github.com/piyush2707/skillproof">github.com/piyush2707/skillproof</a></p>
   </div>
 </footer>
