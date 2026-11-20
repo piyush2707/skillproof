@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skill Pages | SkillProof</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&family=Playfair+Display:ital,wght@0,600;1,500;1,700&display=swap" rel="stylesheet">
+<style>
+  :root{--black:#14100d;--ink:#1d1712;--brown:#5a3a24;--brown2:#7a4f31;--caramel:#d99a55;--cream:#f4ead8;--cream2:#e8d9bb;--muted:#b9a88c;--good:#2f7d4f;--mid:#b8801f;--bad:#b3402e;--sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Playfair Display',Georgia,'Times New Roman',serif}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--black);color:var(--cream);font-family:var(--sans);line-height:1.6;overflow-x:hidden}
+  a{color:inherit}
+  .wrap{max-width:760px;margin:0 auto;padding:0 18px 60px;position:relative}
+  .wrap::before{content:"";position:absolute;z-index:-1;right:-90px;top:-20px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(217,154,85,.3),rgba(90,58,36,.12) 55%,transparent 70%);filter:blur(10px);animation:float 9s ease-in-out infinite}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+  .logo{font-weight:900;letter-spacing:-.5px;font-size:1.1rem;text-decoration:none}
+  .logo i{font-family:var(--serif);font-weight:700;color:var(--caramel)}
+  nav a.back{font-size:.85rem;font-weight:700;border:1.5px solid var(--brown2);padding:8px 14px;border-radius:999px;text-decoration:none;transition:background .2s,color .2s}
+  nav a.back:hover{background:var(--caramel);color:var(--black)}
+  h1{font-size:clamp(2rem,8vw,3rem);line-height:1.05;margin:10px 0;font-weight:900;letter-spacing:-.03em}
+  h1 em{font-family:var(--serif);font-style:italic;font-weight:700;background:linear-gradient(90deg,var(--caramel),#f6d9a8,var(--caramel));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:shimmer 4s linear infinite}
+  h2{font-size:1.3rem;margin:28px 0 8px;font-weight:900;letter-spacing:-.02em}
+  h2 em{font-family:var(--serif);font-style:italic;font-weight:700;color:var(--caramel)}
+  p.sub{color:var(--cream2);margin:0 0 14px}
+  .card{background:var(--cream);color:var(--black);border-radius:16px;padding:18px;margin:14px 0;display:block;text-decoration:none;animation:fadeUp .6s both}
+  a.card{transition:transform .25s,box-shadow .25s}
+  a.card:hover{transform:translateY(-5px);box-shadow:0 14px 30px rgba(90,58,36,.3)}
+  .card h3{margin:0 0 4px;font-size:1.2rem;font-weight:900}
+  .card p{margin:0;font-size:.95rem;opacity:.85}
+  .go{display:inline-block;margin-top:10px;font-weight:900;color:var(--brown2)}
+  .meta{color:var(--brown2);font-size:.85rem}
+  .badge{display:inline-block;font-size:.7rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:999px;margin-bottom:8px;border:1.5px dashed var(--brown2);color:var(--brown2)}
+  .badge.none{border-style:solid}
+  .steps{padding-left:20px;color:var(--cream2)}
+  .steps li{margin:6px 0}
+  .scores{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+  .score{background:var(--black);color:var(--cream);border-radius:12px;padding:12px;text-align:center}
+  .score b{display:block;font-size:1.7rem;font-weight:900;color:var(--caramel)}
+  .score span{font-family:var(--serif);font-style:italic;font-size:.9rem}
+  .case{border-top:1px solid rgba(20,16,13,.12);padding:10px 0}
+  .pill{display:inline-block;font-size:.72rem;font-weight:900;padding:3px 10px;border-radius:999px;margin:6px 6px 0 0;color:#fff}
+  .pill.pass{background:var(--good)}.pill.partial{background:var(--mid)}.pill.fail{background:var(--bad)}
+  pre{background:var(--ink);color:var(--cream2);border:1.5px solid var(--brown);border-radius:14px;padding:14px;overflow-x:auto;white-space:pre-wrap;word-wrap:break-word;font-size:13px}
+  .foot{font-size:.85rem;color:var(--muted);margin-top:26px}
+  @keyframes float{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-28px,22px) scale(1.1)}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  @keyframes shimmer{to{background-position:-200% 0}}
+  @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="logo" href="../">Skill<i>Proof</i></a>
+    <a class="back" id="backlink" href="../">← Home</a>
+  </nav>
+  <div id="app"></div>
+</div>
+
+<script>
+(function () {
+  var REPO = "https://github.com/piyush2707/skillproof";
+
+  var SKILLS = [
+    {
+      id: "hello-skill",
+      name: "hello-skill",
+      desc: "Greets the user and explains what agent skills are. Use when the user asks what a skill is or wants a simple example of one.",
+      text: "---\nname: hello-skill\ndescription: Greets the user and explains what agent skills are. Use when the user asks what a skill is or wants a simple example of one.\n---\n\n# Hello Skill\n\nWhen the user asks what a skill is, explain in two or three sentences that\na skill is a folder with a SKILL.md file that teaches an agent how to do one\ntask well. Then offer to show the structure of this skill.\n",
+      evidence: {
+        label: "Example data",
+        note: "Not a real test run. Shown to demonstrate the Eval Card format.",
+        without: "2 / 3", withs: "3 / 3",
+        cases: [
+          { id: "what-is-a-skill", q: "What is an agent skill?", wo: "partial", wi: "pass" },
+          { id: "show-structure", q: "Show me the structure of a skill.", wo: "partial", wi: "pass" },
+          { id: "unrelated-question", q: "What is the capital of France? (guard case)", wo: "pass", wi: "pass" }
+        ]
+      }
+    },
+    {
+      id: "code-reviewer",
+      name: "code-reviewer",
+      desc: "Reviews code for bugs and style problems. Use when the user asks for a code review of a file, diff or pull request.",
+      text: "---\nname: code-reviewer\ndescription: Reviews code for bugs and style problems. Use when the user asks for a code review of a file, diff or pull request.\n---\n\n# Code Reviewer\n\nWhen asked to review code:\n\n1. Read the whole change before commenting.\n2. List bugs and risky behavior first, most serious first.\n3. Then list style and readability issues.\n4. For each issue, say where it is and suggest a fix.\n5. End with one sentence on whether the change is ready to merge.\n\nDo not rewrite the whole file unless the user asks.\n",
+      evidence: null
+    }
+  ];
+
+  var app = document.getElementById("app");
+  var backlink = document.getElementById("backlink");
+
+  function tokens(s) { return Math.ceil(s.length / 4); }
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined) e.textContent = text;
+    return e;
+  }
+
+  function showList() {
+    app.textContent = "";
+    backlink.textContent = "← Home";
+    backlink.setAttribute("href", "../");
+    var h1 = el("h1"); h1.appendChild(document.createTextNode("Skill ")); h1.appendChild(el("em", "", "Pages"));
+    app.appendChild(h1);
+    app.appendChild(el("p", "sub", "One page per example skill: what it does, its rough context cost, install steps and evidence."));
+    SKILLS.forEach(function (s) {
+      var a = el("a", "card");
+      a.setAttribute("href", "#" + s.id);
+      a.appendChild(el("h3", "", s.name));
+      a.appendChild(el("p", "", s.desc));
+      a.appendChild(el("div", "meta", "About " + tokens(s.text) + " tokens in full (estimate)"));
+      a.appendChild(el("span", "go", "Open →"));
+      app.appendChild(a);
+    });
+    app.appendChild(el("p", "foot", "Token counts are estimates at about 4 characters per token."));
+  }
+
+  function h2(a, b) {
+    var h = el("h2"); h.appendChild(document.createTextNode(a + " "));
+    h.appendChild(el("em", "", b)); return h;
+  }
+
+  function showSkill(s) {
+    app.textContent = "";
+    backlink.textContent = "← All skills";
+    backlink.setAttribute("href", "#");
+    app.appendChild(el("h1", "", s.name));
+    app.appendChild(el("p", "sub", s.desc));
+
+    var cost = el("div", "card");
+    cost.appendChild(el("b", "", "Context cost (estimate)"));
+    cost.appendChild(el("div", "meta", "About " + tokens(s.name + " " + s.desc) +
+      " tokens always loaded (name + description), about " + tokens(s.text) +
+      " in full. Estimates use ~4 characters per token."));
+    app.appendChild(cost);
+
+    app.appendChild(h2("How to", "install"));
+    var ol = el("ol", "steps");
+    var li1 = el("li"); li1.appendChild(document.createTextNode("Download the folder "));
+    li1.appendChild(el("b", "", s.name)); li1.appendChild(document.createTextNode(" from "));
+    var link = el("a", "", "the repository"); link.setAttribute("href", REPO + "/tree/main/skills-examples/" + s.id);
+    li1.appendChild(link); li1.appendChild(document.createTextNode("."));
+    ol.appendChild(li1);
+    ol.appendChild(el("li", "", "Place it where your agent looks for skills. The location differs by agent, so check your agent's documentation."));
+    ol.appendChild(el("li", "", "Ask something that matches the description and see whether the agent uses the skill."));
+    app.appendChild(ol);
+
+    app.appendChild(el("h2", "", "Evidence"));
+    var ev = el("div", "card");
+    if (s.evidence) {
+      ev.appendChild(el("span", "badge", s.evidence.label));
+      ev.appendChild(el("div", "meta", s.evidence.note));
+      var sc = el("div", "scores");
+      var a = el("div", "score"); a.appendChild(el("b", "", s.evidence.without)); a.appendChild(el("span", "", "without the skill"));
+      var b = el("div", "score"); b.appendChild(el("b", "", s.evidence.withs)); b.appendChild(el("span", "", "with the skill"));
+      sc.appendChild(a); sc.appendChild(b); ev.appendChild(sc);
+      s.evidence.cases.forEach(function (c) {
+        var d = el("div", "case");
+        d.appendChild(el("b", "", c.id));
+        d.appendChild(el("div", "", c.q));
+        d.appendChild(el("span", "pill " + c.wo, "without: " + c.wo));
+        d.appendChild(el("span", "pill " + c.wi, "with: " + c.wi));
+        ev.appendChild(d);
+      });
+    } else {
+      ev.appendChild(el("span", "badge none", "No eval card yet"));
+      ev.appendChild(el("p", "", "This skill has no recorded test results. Add evals/" + s.id + ".eval.json to show evidence here."));
+    }
+    app.appendChild(ev);
+
+    app.appendChild(h2("Skill", "text"));
+    app.appendChild(el("pre", "", s.text));
+    app.appendChild(el("p", "foot", "Token counts are estimates." + (s.evidence ? " Evidence above is example data." : "")));
+  }
+
+  function route() {
+    var id = (location.hash || "").replace("#", "");
+    var found = null;
+    SKILLS.forEach(function (s) { if (s.id === id) found = s; });
+    if (found) showSkill(found); else showList();
+    window.scrollTo(0, 0);
+  }
+
+  window.addEventListener("hashchange", route);
+  route();
+})();
+</script>
+</body>
+</html>
