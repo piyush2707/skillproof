@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>code-reviewer | SkillProof</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&family=Playfair+Display:ital,wght@0,600;1,500;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../skills.css">
+</head>
+<body>
+<div class="wrap">
+  <nav><a class="logo" href="../../">Skill<i>Proof</i></a><a class="back" href="../">← All skills</a></nav>
+
+  <h1>code-<em>reviewer</em></h1>
+  <p class="sub">Reviews code for bugs and style problems. Use when the user asks for a code review of a file, diff or pull request.</p>
+
+  <div class="card">
+    <b>Context cost (estimate)</b>
+    <div class="meta">About 33 tokens always loaded (name + description), about 131 in full. Estimates use ~4 characters per token.</div>
+  </div>
+
+  <h2>How to <em>install</em></h2>
+  <ol class="steps">
+    <li>Download the folder <b>code-reviewer</b> from <a href="https://github.com/piyush2707/skillproof/tree/main/skills-examples/code-reviewer">the repository</a>.</li>
+    <li>Place it where your agent looks for skills. The location differs by agent, so check your agent's documentation.</li>
+    <li>Ask for a code review and see whether the agent uses the skill.</li>
+  </ol>
+
+  <h2>Evidence</h2>
+  <div class="card">
+    <span class="badge none">No eval card yet</span>
+    <p>This skill has no recorded test results. Add <b>evals/code-reviewer.eval.json</b> to show evidence here.</p>
+  </div>
+
+  <h2>Skill <em>text</em></h2>
+<pre>---
+name: code-reviewer
+description: Reviews code for bugs and style problems. Use when the user asks for a code review of a file, diff or pull request.
+---
+
+# Code Reviewer
+
+When asked to review code:
+
+1. Read the whole change before commenting.
+2. List bugs and risky behavior first, most serious first.
+3. Then list style and readability issues.
+4. For each issue, say where it is and suggest a fix.
+5. End with one sentence on whether the change is ready to merge.
+
+Do not rewrite the whole file unless the user asks.</pre>
+
+  <p class="foot">Token counts are estimates.</p>
+</div>
+</body>
+</html>
