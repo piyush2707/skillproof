@@ -1,4 +1,4 @@
-name: Validate skills
+name: Validate skills and evals
 
 on:
   push:
@@ -19,10 +19,21 @@ jobs:
       - name: Validate example skills
         run: python validators/validate_skill.py skills-examples
 
-      - name: Bad fixture must be rejected
+      - name: Bad skill must be rejected
         run: |
           if python validators/validate_skill.py tests/fixtures; then
             echo "Expected the bad skill to fail, but it passed"
             exit 1
           fi
           echo "Bad skill correctly rejected"
+
+      - name: Validate eval cards
+        run: python validators/validate_evals.py evals
+
+      - name: Bad eval card must be rejected
+        run: |
+          if python validators/validate_evals.py tests/fixtures/bad-eval; then
+            echo "Expected the bad eval card to fail, but it passed"
+            exit 1
+          fi
+          echo "Bad eval card correctly rejected"
