@@ -1,0 +1,32 @@
+{
+  "skill": "hello-skill",
+  "version": "0.1.0",
+  "evidence_type": "example",
+  "agent": "Example data, not a real test run",
+  "tested_on": "2026-11-20",
+  "cases": [
+    {
+      "id": "what-is-a-skill",
+      "prompt": "What is an agent skill?",
+      "expect": "Says a skill is a folder with a SKILL.md file that teaches an agent one task",
+      "without_skill": "partial",
+      "with_skill": "pass",
+      "notes": "Example only"
+    },
+    {
+      "id": "show-structure",
+      "prompt": "Show me the structure of a skill.",
+      "expect": "Describes the folder, SKILL.md, and the name and description fields",
+      "without_skill": "partial",
+      "with_skill": "pass"
+    },
+    {
+      "id": "unrelated-question",
+      "prompt": "What is the capital of France?",
+      "expect": "Answers normally and does not trigger the skill",
+      "without_skill": "pass",
+      "with_skill": "pass",
+      "notes": "Guard case: the skill must stay quiet"
+    }
+  ]
+}
