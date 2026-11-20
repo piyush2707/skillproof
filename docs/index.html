@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SkillProof</title>
+<style>
+  :root { --bg:#0f1115; --card:#181b22; --text:#e8eaf0; --muted:#9aa3b2; --accent:#ff7a1a; --line:#2a2f3a; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text);
+         font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif; line-height:1.55; }
+  main { max-width:760px; margin:0 auto; padding:40px 16px 60px; }
+  h1 { font-size:2.2rem; margin:0 0 8px; }
+  p.lead { color:var(--muted); font-size:1.1rem; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px; margin:14px 0; }
+  .card h2 { margin:0 0 6px; font-size:1.1rem; }
+  .tag { font-size:.75rem; color:var(--muted); }
+  a.btn { display:inline-block; background:var(--accent); color:#111; font-weight:700;
+          padding:12px 18px; border-radius:8px; text-decoration:none; margin:6px 8px 6px 0; }
+  a.ghost { background:var(--card); color:var(--text); border:1px solid var(--line); }
+</style>
+</head>
+<body>
+<main>
+  <h1>SkillProof</h1>
+  <p class="lead">Test, score and showcase AI agent skills and prompts. Free, open source, runs in your browser.</p>
+  <a class="btn" href="meter/">Try the Context Meter</a>
+  <a class="btn ghost" href="https://github.com/piyush2707/skillproof">View on GitHub</a>
+
+  <div class="card"><h2>Context Meter</h2>
+    <span class="tag">Available</span>
+    <p>See how much context your skills use before any task starts.</p></div>
+  <div class="card"><h2>Validator Action</h2>
+    <span class="tag">Available (GitHub Action in this repo)</span>
+    <p>Checks SKILL.md structure and quality on every pull request.</p></div>
+  <div class="card"><h2>Conflict Map</h2>
+    <span class="tag">Planned</span>
+    <p>Flags skills whose descriptions overlap and may confuse an agent.</p></div>
+  <div class="card"><h2>Eval Cards</h2>
+    <span class="tag">Planned</span>
+    <p>Test cases with before/after evidence that a skill works.</p></div>
+</main>
+</body>
+</html>
