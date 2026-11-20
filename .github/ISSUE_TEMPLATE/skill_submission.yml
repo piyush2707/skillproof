@@ -1,0 +1,25 @@
+name: Skill submission
+description: Suggest a skill for skills-examples
+labels: ["skill"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Skill name
+      description: Lowercase letters, numbers and hyphens
+      placeholder: my-skill
+    validations:
+      required: true
+  - type: textarea
+    id: purpose
+    attributes:
+      label: What does it do, and when should an agent use it?
+    validations:
+      required: true
+  - type: textarea
+    id: tested
+    attributes:
+      label: How did you test it?
+      description: Which agent, and what happened. Say so honestly if it is untested.
+    validations:
+      required: true
